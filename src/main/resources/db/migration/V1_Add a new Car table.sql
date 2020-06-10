@@ -1,0 +1,6 @@
+CREATE TABLE Car (
+  carId INT NOT NULL AUTO_INCREMENT,
+  currentLocation VARCHAR(100),
+  status VARCHAR(50),
+  PRIMARY KEY (carId)
+)ENGINE=InnoDB;
