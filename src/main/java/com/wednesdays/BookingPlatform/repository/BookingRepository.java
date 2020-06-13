@@ -8,7 +8,7 @@ import com.wednesdays.BookingPlatform.entity.Booking;
 import com.wednesdays.BookingPlatform.entity.Car;
 
 
-public interface BookingRepository extends JpaRepository<Booking, Long>{
+public interface BookingRepository extends JpaRepository<Booking, Integer>{
 
 	List<Booking> findByUserIdAndStatus(int userId,String status);
 }

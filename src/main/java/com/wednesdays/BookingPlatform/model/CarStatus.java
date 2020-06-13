@@ -5,7 +5,7 @@ public enum CarStatus {
 	NOT_AVAILABLE("NOT_AVAILABLE");
 	private String status;
 	private CarStatus(String status) {
-		status=status;
+		this.status=status;
 	}
 	public String getStatus() {
 		return status;

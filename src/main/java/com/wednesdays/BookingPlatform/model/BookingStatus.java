@@ -7,7 +7,7 @@ CANCELLED("CANCELLED"),
 COMPLETED("COMPLETED");
 	private String status;
 	private BookingStatus(String status) {
-		status=status;
+		this.status=status;
 	}
 	public String getStatus() {
 		return status;

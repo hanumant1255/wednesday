@@ -21,22 +21,18 @@ public class BookingPlatformService {
 	@Autowired
 	CarRepository carRepository;
 
-	public Booking requestBooking(int userId, String src, String dest) {
+	public Booking requestBooking(Booking booking) {
 		Booking bookingResp=new Booking();
 		//Find available cars
-		List<Car> availableCars=carRepository.findByCurrentLocationAndStatus(src, CarStatus.AVAILABLE.getStatus());
+		List<Car> availableCars=carRepository.findByCurrentLocationIgnoreCaseAndStatus(booking.getSrc(), CarStatus.AVAILABLE.getStatus());
 		if(availableCars!=null && !availableCars.isEmpty()) {
-		Booking booking = new Booking();
-		booking.setSrc(src);
-		booking.setDest(dest);
-		booking.setUserId(userId);
 		booking.setCarId(availableCars.get(0).getCarId());
 		booking.setStatus(BookingStatus.ALLOCATED.getStatus());
 		bookingResp=bookingPlatformRepository.save(booking);
 		Car car=new Car();
 		car.setCarId(availableCars.get(0).getCarId());
 		car.setStatus(CarStatus.NOT_AVAILABLE.getStatus());
-		
+		car.setCurrentLocation(booking.getSrc());
 		//Mark car status as not available
 		carRepository.save(car);
 		}
@@ -48,6 +44,6 @@ public class BookingPlatformService {
 	}
 
 	public List<Car> getCabs(String currentLocation) {
-		return carRepository.findByCurrentLocationAndStatus(currentLocation, CarStatus.AVAILABLE.getStatus());
+		return carRepository.findByCurrentLocationIgnoreCaseAndStatus(currentLocation,CarStatus.AVAILABLE.getStatus());
 	}
 }

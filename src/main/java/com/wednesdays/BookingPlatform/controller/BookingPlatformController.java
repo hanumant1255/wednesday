@@ -2,12 +2,15 @@ package com.wednesdays.BookingPlatform.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,12 +28,11 @@ public class BookingPlatformController {
 	@Autowired
 	BookingPlatformService bookingPlatformService;
 
-	@PostMapping(value = "/booking/{userId}")
-	public ResponseEntity<BookingResponse> requestBooking(@PathVariable int userId, @RequestParam String src,
-			@RequestParam String dest) {
+	@PostMapping(value = "/booking")
+	public ResponseEntity<BookingResponse> requestBooking(@RequestBody @Valid Booking bookingReq) {
 		BookingResponse bookingResponse = new BookingResponse();
 		try {
-			Booking booking = bookingPlatformService.requestBooking(userId, src, dest);
+			Booking booking = bookingPlatformService.requestBooking(bookingReq);
 			ResponseStatus responseStatus = new ResponseStatus();
 			if (booking.getBookingId() > 0) {
 				responseStatus.setStatus(ResponseStatus.SUCCESS);
