@@ -1,0 +1,21 @@
+CREATE TABLE IF NOT EXISTS User (
+  userId INT NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (userId)
+);
+
+CREATE TABLE IF NOT EXISTS Car (
+  carId INT NOT NULL AUTO_INCREMENT,
+  currentLocation VARCHAR(100),
+  status VARCHAR(50),
+  PRIMARY KEY (carId)
+);
+
+CREATE TABLE IF NOT EXISTS Booking (
+  bookingId INT NOT NULL AUTO_INCREMENT,
+  src VARCHAR(100),
+  dest VARCHAR(100),
+  status VARCHAR(50),
+  userId INT,
+  carId INT,
+  PRIMARY KEY (bookingId)
+);

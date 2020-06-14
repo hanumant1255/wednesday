@@ -12,14 +12,15 @@ import com.wednesdays.BookingPlatform.model.CarStatus;
 import com.wednesdays.BookingPlatform.repository.BookingRepository;
 import com.wednesdays.BookingPlatform.repository.CarRepository;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class BookingPlatformService {
 
-	@Autowired
-	BookingRepository bookingPlatformRepository;
-
-	@Autowired
-	CarRepository carRepository;
+	
+	private final BookingRepository bookingRepository;
+	private final CarRepository carRepository;
 
 	public Booking requestBooking(Booking booking) {
 		Booking bookingResp=new Booking();
@@ -28,7 +29,7 @@ public class BookingPlatformService {
 		if(availableCars!=null && !availableCars.isEmpty()) {
 		booking.setCarId(availableCars.get(0).getCarId());
 		booking.setStatus(BookingStatus.ALLOCATED.getStatus());
-		bookingResp=bookingPlatformRepository.save(booking);
+		bookingResp=bookingRepository.save(booking);
 		Car car=new Car();
 		car.setCarId(availableCars.get(0).getCarId());
 		car.setStatus(CarStatus.NOT_AVAILABLE.getStatus());
@@ -40,7 +41,7 @@ public class BookingPlatformService {
 	}
 
 	public List<Booking> getBookings(int userId) {
-		return bookingPlatformRepository.findByUserIdAndStatus(userId, BookingStatus.COMPLETED.getStatus());
+		return bookingRepository.findByUserIdAndStatus(userId, BookingStatus.COMPLETED.getStatus());
 	}
 
 	public List<Car> getCabs(String currentLocation) {
